@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+            }
+        }
+    }
+    post {
+        success {
+            slackSend channel: '#jenkins-notifications', color: 'good', message: 'Build Successful!'
+        }
+        failure {
+            slackSend channel: '#jenkins-notifications', color: 'danger', message: 'Build Failed!'
+        }
+    }
+}
